@@ -33,7 +33,11 @@ class App extends Component<{}, { isLoggedIn: any }> {
         <div className="App">
           {/* How you pass props to a component that is an attribute of a Route element? */}
           <Navbar isLoggedIn={isLoggedIn}  handleLogout={this.handleLogout}/>
-          <Route path="/home" component={isLoggedIn ? Home : Login} />
+
+          {/* <Route path="/home" component={isLoggedIn ? Home : Login} something='foo' /> */}
+          {/* render={()=><TestWidget num="2" someProp={100}/>} */}
+          
+          <Route path='/home' render={() => isLoggedIn ? <Home myprop='hey there'/> : <Login />} />
           <Route path="/About" component={isLoggedIn ? About : Login} />
           <Route path="/contact" component={isLoggedIn ? Contact : Login} />
         </div>
