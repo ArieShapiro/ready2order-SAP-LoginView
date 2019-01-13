@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Home = (props: any) => {
-    console.log(props)
     return (
         <div className="container">
           <h4 className="center">Home</h4>

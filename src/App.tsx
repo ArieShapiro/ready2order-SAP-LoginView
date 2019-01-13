@@ -6,21 +6,34 @@ import Contact from "./components/Contact";
 import About from "./components/About";
 import Login from "./components/Login";
 
-class App extends Component<{}, { isLoggedIn: any }> {
+class App extends Component<{}, { isLoggedIn: any, nameValue: any, passwordValue: any }> {
   constructor(props: any) {
     super(props);
     this.state = {
-      isLoggedIn: true
+      isLoggedIn: false,
+      nameValue: '',
+      passwordValue: ''
     };
-  }
-  //Bind handleLoginForm function like in react docs
 
-  handleLoginForm() {
+    this.handleChange = this.handleChange.bind(this);
+    this.handleForm = this.handleForm.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleChange(e: any) {
+    if (e.target.placeholder==='Name') {
+           console.log('gugi!!!!!!!!!!!!')
+    } else {
+
+    }
+    // this.setState({value: event.target.value});
+  }
+
+  handleForm() {
     console.log('Handling form...')
   }
 
-  handleLogout = () => {
-    console.log('Loging out...')
+  handleLogout() {
     this.setState({
       isLoggedIn: false
     })
@@ -28,18 +41,14 @@ class App extends Component<{}, { isLoggedIn: any }> {
 
   render() {
     const isLoggedIn = this.state.isLoggedIn;
+    const loginCmp = <Login onChange={this.handleChange} handleForm={this.handleForm} />;
     return (
       <BrowserRouter>
         <div className="App">
-          {/* How you pass props to a component that is an attribute of a Route element? */}
           <Navbar isLoggedIn={isLoggedIn}  handleLogout={this.handleLogout}/>
-
-          {/* <Route path="/home" component={isLoggedIn ? Home : Login} something='foo' /> */}
-          {/* render={()=><TestWidget num="2" someProp={100}/>} */}
-          
-          <Route path='/home' render={() => isLoggedIn ? <Home myprop='hey there'/> : <Login />} />
-          <Route path="/About" component={isLoggedIn ? About : Login} />
-          <Route path="/contact" component={isLoggedIn ? Contact : Login} />
+          <Route path='/home' render={() => isLoggedIn ? <Home/> : loginCmp} />
+          <Route path="/About" render={() => isLoggedIn ? <About/> : loginCmp} />
+          <Route path="/contact" render={() => isLoggedIn ? <Contact/> : loginCmp} />
         </div>
       </BrowserRouter>
     );
